@@ -10,7 +10,7 @@ Học phần 04211 Bảo mật sinh trắc, lớp 2610421101, học kỳ 1 năm 
 
 ## 1. Tóm tắt kết quả
 
-Bài thực hành đã hoàn thiện việc cài đặt độc lập mô-đun tính toán các chỉ số đánh giá hiệu năng sinh trắc học (`bio_metrics.py`) và vượt qua toàn bộ 21/21 phép kiểm thử tự động. Trên tập dữ liệu thực nghiệm (1.000 cặp cùng người và 10.000 cặp khác người), giá trị EER tự tính cho ba hệ thống A, B, C lần lượt là 2,81%, 2,72% và 2,61%, hoàn toàn khớp với thư viện tham chiếu quốc tế `pyeer` với độ lệch tuyệt đối rất nhỏ từ 0,005 đến 0,015 điểm phần trăm (đạt chuẩn giới hạn cho phép <= 0,5 pp). Hệ thống C đạt hiệu năng tổng thể tối ưu nhất nhờ chỉ số phân tách d' cao nhất (4,461) và duy trì FNMR thấp nhất (7,0%) tại vùng an ninh cao (FMR = 0,1%). Tất cả các yêu cầu về bảng số liệu CSV và đồ thị trực quan hóa (phân bố điểm, DET, ROC) đều đã được hoàn thành trọn vẹn.
+Bài thực hành đã hoàn thiện việc cài đặt độc lập mô-đun tính toán các chỉ số đánh giá hiệu năng sinh trắc học (`bio_metrics.py`) và vượt qua toàn bộ 21/21 phép kiểm thử tự động. Trên tập dữ liệu thực nghiệm (1.000 cặp cùng người và 10.000 cặp khác người), giá trị EER tự tính cho ba hệ thống A, B, C lần lượt là 2,81%, 2,72% và 2,61%, hoàn toàn khớp với thư viện tham chiếu quốc tế `pyeer` với độ lệch tuyệt đối rất nhỏ từ 0,005 đến 0,015 điểm phần trăm (đạt chuẩn giới hạn cho phép <= 0,5 pp). Hệ thống C đạt hiệu năng tổng thể tối ưu nhất nhờ chỉ số phân tách d' cao nhất (4,461) và duy trì FNMR thấp nhất (7,0%) tại vùng an ninh cao (FMR = 0,1%). Toàn bộ 5 bài toán phân tích định lượng theo đề bài đều đã được giải quyết trọn vẹn.
 
 ## 2. Mức độ hoàn thành
 
@@ -21,7 +21,7 @@ Bài thực hành đã hoàn thiện việc cài đặt độc lập mô-đun t�
 | Chạy kịch bản đánh giá `th01_main.py` với mã sinh viên 2305CT2318 | Hoàn thành | 4.3 |
 | Xuất bảng số liệu tổng hợp `TH01_2305CT2318_bang-ket-qua.csv` và kiểm chứng chéo với `pyeer` | Hoàn thành | 5.1 |
 | Trực quan hóa dữ liệu và xuất các đồ thị phân bố điểm, đường cong DET, ROC | Hoàn thành | 5.2 |
-| Phân tích định lượng hiệu năng và đánh giá rủi ro an ninh quy mô lớn (FPIR) | Hoàn thành | 6, 7 |
+| Phân tích định lượng 5 câu hỏi theo yêu cầu Bước 6 của đề bài | Hoàn thành | 6.1 – 6.5 |
 
 ## 3. Môi trường thực hiện và khả năng tái lập
 
@@ -76,7 +76,9 @@ Thực thi kịch bản kiểm tra chất lượng mã nguồn:
 
 21/21 phép kiểm thử đạt.
 ```
-### 4.3. Chạy kịch bản chính (th01_main.py)
+
+### 4.3. Chạy kịch bản chính (`th01_main.py`)
+
 Thực thi kịch bản đánh giá với mã sinh viên:
 ```powershell
 (venv) PS C:\Users\HUY\sinhtrac-2305CT2318\lab02> python th01_main.py --ma-sv 2305CT2318
@@ -114,16 +116,38 @@ Dữ liệu kết xuất từ tệp `ket-qua/TH01_2305CT2318_bang-ket-qua.csv`:
 
 ## 6. Phân tích và thảo luận
 
-### 6.1. Về độ chính xác và tính hội tụ của thuật toán
-Thuật toán tự cài đặt cho kết quả trùng khớp gần như tuyệt đối với thư viện chuẩn `pyeer`. Độ lệch điểm phần trăm EER của cả 3 hệ thống chỉ đạt 0,005 pp (hệ thống A, B) và 0,015 pp (hệ thống C), nhỏ hơn rất nhiều so với ngưỡng khắt khe 0,5 pp. Nhờ sử dụng thuật toán tìm kiếm nhị phân (`np.searchsorted`) trên mảng điểm đã sắp xếp, thời gian tính toán tự cài đặt chỉ mất 0,000 – 0,001 giây, nhanh hơn đáng kể so với việc tính toán qua các vòng lặp thông thường của `pyeer` (0,006 – 0,073 giây).
+### 6.1. Câu hỏi 1: Lựa chọn giữa Hệ thống A và B khi ngân hàng yêu cầu FMR <= 0,1%
+- **Lựa chọn:** Bắt buộc phải chọn **Hệ thống A**.
+- **Vì sao EER không đủ để quyết định:** EER của Hệ thống B (2,72%) thực tế còn thấp hơn Hệ thống A (2,81%), nhưng EER chỉ là một điểm cân bằng đơn lẻ trên đường cong. Khi triển khai trong ngân hàng với yêu cầu bảo mật cao (FMR <= 0,1%), FNMR của Hệ thống B vọt lên tới **79,3%** (gần 80% giao dịch của khách hàng hợp lệ bị từ chối oan), trong khi Hệ thống A chỉ có FNMR là **21,2%**.
+- **Nguyên nhân từ hình phân bố điểm:** Quan sát đồ thị phân bố điểm (`TH01_2305CT2318_phan-bo-diem.png`), phân bố điểm Genuine của Hệ thống B có phần đuôi bên trái trải rất dài và dẹp sang phía điểm thấp. Khi buộc phải đẩy ngưỡng lên cao để triệt tiêu FMR về mức 0,1%, toàn bộ phần đuôi dài này của Genuine bị hệ thống từ chối sai, dẫn tới đường DET của B dốc đứng và FNMR tăng vọt.
 
-### 6.2. So sánh bản chất phân bố điểm số giữa các hệ thống (Hình 1)
-- Hệ thống A và B hoạt động dựa trên điểm tương đồng (Similarity Score): phân bố Genuine nằm bên phải (điểm cao hơn) và Impostor nằm bên trái (điểm thấp hơn).
-- Hệ thống C hoạt động dựa trên thước đo khoảng cách (Distance Metric): phân bố Genuine nằm bên trái (khoảng cách nhỏ hơn, tập trung quanh giá trị 0,3) và Impostor nằm bên phải (khoảng cách lớn hơn, tập trung quanh giá trị 1,05). Vùng giao thoa (overlap) giữa hai phân bố của Hệ thống C là hẹp nhất, giải thích trực quan cho việc Hệ thống C đạt chỉ số phân tách d' cao nhất trong cả ba hệ thống ($d' = 4,461$).
+### 6.2. Câu hỏi 2: Hệ thống C dùng điểm khoảng cách, nếu quên đổi chiều thì EER bằng bao nhiêu?
+- **Kết quả EER nếu quên đổi chiều:** **97,39%** (tức 100% - 2,61%).
+- **Giải thích:** Hệ thống C sử dụng khoảng cách (Distance Metric): cặp cùng người có khoảng cách nhỏ, cặp khác người có khoảng cách lớn. Quy tắc chấp nhận đúng là $d \le t$. Nếu để nhầm `higher_is_better=True`, hệ thống sẽ chấp nhận khi $d \ge t$ (hoàn toàn ngược chiều logic). Khi đó, tỷ lệ lỗi mới biến thành $\text{FMR}_{\text{sai}}(t) = 1 - \text{FMR}(t)$ và $\text{FNMR}_{\text{sai}}(t) = 1 - \text{FNMR}(t)$. Tại ngưỡng $t_{\text{EER}}$, ta có $\text{EER}_{\text{sai}} = 1 - \text{EER}_{\text{đúng}} = 1 - 0,0261 = 0,9739$. Hệ thống khi đó sẽ từ chối gần như toàn bộ người thật và nhận nhầm hầu hết kẻ giả mạo.
 
-### 6.3. Phân tích hành vi trên đường cong DET và ROC (Hình 2 và Hình 3)
-- Mặc dù Hệ thống B có chỉ số EER khá tốt (2,72%, thấp hơn Hệ thống A là 2,81%), nhưng đường cong DET của Hệ thống B lại dốc đứng ở vùng FMR thấp. Khi thắt chặt an ninh từ mốc EER về FMR = 0,1%, FNMR của Hệ thống B tăng vọt lên tới 79,3% (trong khi Hệ thống A là 21,2% và Hệ thống C chỉ là 7,0%).
-- Hiện tượng này chứng minh rằng chỉ số EER đơn lẻ không phản ánh đầy đủ hiệu năng của một hệ thống sinh trắc học khi triển khai ở các ngưỡng vận hành thực tế. Hệ thống C duy trì đường cong DET thấp nhất và ổn định nhất trên toàn bộ dải ngưỡng, khẳng định ưu thế vượt trội khi áp dụng vào thực tế.
+### 6.3. Câu hỏi 3: Quy tắc số 3 (Rule of 3) khi hệ thống đạt 0 lỗi trên 10.000 cặp khác người
+- **Cận trên tin cậy 95% của FMR:**
+  $$\text{FMR}_{\text{upper}} \approx \frac{3}{N} = \frac{3}{10.000} = 0,0003 = 0,03\%$$
+- **Vì sao "0 lỗi" không có nghĩa là "FMR bằng 0":** Dữ liệu kiểm thử $N = 10.000$ chỉ là một mẫu hữu hạn rút ra từ không gian thực tế vô hạn. Về mặt xác suất, nếu một hệ thống có tỷ lệ lỗi thực tế $p > 0$, xác suất để thử nghiệm $N$ lần độc lập mà may mắn không gặp lỗi nào là $(1 - p)^N$. Với mức ý nghĩa thống kê $\alpha = 0,05$ (độ tin cậy 95%), ta giải phương trình $(1 - p)^N = 0,05 \Rightarrow p \approx \frac{3}{N}$. Do đó, "0 lỗi" trên 10.000 mẫu chỉ cho phép ta kết luận với độ tin cậy 95% rằng tỷ lệ lỗi thực tế không vượt quá 0,03%, chứ không thể khẳng định hệ thống hoàn hảo tuyệt đối ($\text{FMR} = 0$).
+
+### 6.4. Câu hỏi 4: Kiểm chứng Thông tư 50/2024/TT-NHNN (FMR < 0,01%)
+- **Khả năng kiểm chứng với 10.000 cặp khác người:** **Không thể kiểm chứng được**.
+  - Với $N = 10.000$, nếu chỉ mắc đúng 1 lỗi thì tỷ lệ FMR đo được đã bằng $\frac{1}{10.000} = 0,01\%$. Kể cả khi đo được 0 lỗi thì theo Quy tắc số 3 ở trên, cận trên tin cậy 95% vẫn là $0,03\% > 0,01\%$, chưa đủ bằng chứng thống kê để khẳng định hệ thống đạt chuẩn.
+- **Số cặp khác người tối thiểu cần thiết:**
+  - Theo **Quy tắc số 3** (trường hợp kiểm nghiệm lý tưởng đạt 0 lỗi ở độ tin cậy 95%):
+    $$N_{\min} \ge \frac{3}{0,01\%} = \frac{3}{0,0001} = \mathbf{30.000}\text{ cặp}$$
+  - Theo **Quy tắc 30 lỗi của Doddington** (khuyến nghị trong tiêu chuẩn ISO/IEC 19795 để ước lượng FMR với độ lệch tương đối $\pm 30\%$ ở độ tin cậy 90%):
+    $$N \ge \frac{30}{\text{FMR}} = \frac{30}{0,0001} = \mathbf{300.000}\text{ cặp}$$
+
+### 6.5. Câu hỏi 5: Tính toán kỳ vọng sai số trong thực tế
+- **Lớp 50 sinh viên khi so từng cặp:**
+  - Số cặp khác người tạo thành:
+    $$C_{50}^2 = \frac{50 \times 49}{2} = \mathbf{1.225}\text{ cặp}$$
+  - Kỳ vọng số cặp so khớp sai khi $\text{FMR} = 1\%$:
+    $$E = 1.225 \times 1\% = 1.225 \times 0,01 = \mathbf{12,25}\text{ cặp}$$
+- **Tìm kiếm 1:N trên 100 triệu bản ghi ($N = 10^8$) với $\text{FMR} = 0,01\%$:**
+  - Kỳ vọng số kết quả sai cho mỗi lần tìm:
+    $$E = N \times \text{FMR} = 100.000.000 \times 0,0001 = \mathbf{10.000}\text{ kết quả sai cho mỗi lần tìm}$$
 
 ## 7. Ý nghĩa đối với bảo mật
 
@@ -153,6 +177,7 @@ Nguồn tham khảo:
 - Tiêu chuẩn ISO/IEC 19795-1: Biometric performance testing and reporting.
 - Thư viện tham chiếu mã nguồn mở `pyeer` (Python Electronic Error Rate): https://github.com/mrquincymorris/pyeer, truy cập ngày 28/09/2026.
 - Tài liệu hướng dẫn thực hành Lab 02 - Học phần Bảo mật sinh trắc, Trường Đại học Hùng Vương TP. Hồ Chí Minh.
+- Thông tư 50/2024/TT-NHNN của Ngân hàng Nhà nước Việt Nam về an toàn, bảo mật cho việc cung cấp dịch vụ trực tuyến trong ngành ngân hàng.
 
 Công cụ AI: Sử dụng Gemini làm trợ lý kỹ thuật hỗ trợ dò lỗi cú pháp, gỡ lỗi kiểu dữ liệu đồ thị `matplotlib`, và tối ưu thuật toán tìm kiếm nhị phân trong `bio_metrics.py`.
 
