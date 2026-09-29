@@ -75,7 +75,7 @@ Thực thi kịch bản kiểm tra chất lượng mã nguồn:
 ĐẠT    probit(0) được kẹp, hữu hạn: nhận -4.264890793922825, mong đợi -4.264890794
 
 21/21 phép kiểm thử đạt.
-
+'''
 4.3. Chạy kịch bản chính (th01_main.py)
 Thực thi kịch bản đánh giá với mã sinh viên:
 (venv) PS C:\Users\HUY\sinhtrac-2305CT2318\lab02> python th01_main.py --ma-sv 2305CT2318
