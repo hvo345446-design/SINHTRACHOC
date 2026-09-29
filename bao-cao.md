@@ -1,6 +1,3 @@
-Toàn văn nội dung chuẩn đã được xóa sạch toàn bộ dấu ngoặc nhọn `{ }` và chuẩn hóa hiển thị bảng biểu, khối code và đường dẫn ảnh để bạn dán trực tiếp khi chỉnh sửa trên GitHub web (bằng nút bút chì **Edit file**):
-
-```markdown
 # Báo cáo thực hành LAB_2: Tự tính các chỉ số đánh giá hiệu năng: FMR, FNMR, EER, DET
 
 Học phần 04211 Bảo mật sinh trắc, lớp 2610421101, học kỳ 1 năm học 2026-2027.
