@@ -78,6 +78,7 @@ Thực thi kịch bản kiểm tra chất lượng mã nguồn:
 ```
 ### 4.3. Chạy kịch bản chính (th01_main.py)
 Thực thi kịch bản đánh giá với mã sinh viên:
+```powershell
 (venv) PS C:\Users\HUY\sinhtrac-2305CT2318\lab02> python th01_main.py --ma-sv 2305CT2318
 [A] EER tự tính = 2.810%, pyeer = 2.805%, lệch 0.005 điểm phần trăm: ĐẠT
 [B] EER tự tính = 2.720%, pyeer = 2.715%, lệch 0.005 điểm phần trăm: ĐẠT
@@ -89,6 +90,7 @@ Hệ thống A tại ngưỡng 0.6674: FMR đo được = 0.100%
   N =   100,000,000: số so khớp sai kỳ vọng N*FMR = 100,000.00; FPIR = 1-(1-FMR)^N = 1.0000
 
 Đã ghi bảng và đồ thị vào C:\Users\HUY\sinhtrac-2305CT2318\lab02\ket-qua (tiền tố TH01_2305CT2318)
+```
 
 ## 5. Kết quả định lượng
 
