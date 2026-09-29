@@ -195,7 +195,3 @@ Công cụ AI: Sử dụng Gemini làm trợ lý kỹ thuật hỗ trợ dò l�
 Tôi cam kết các kết quả trong báo cáo này do chính tôi chạy trên máy của mình, các phần sử dụng lại của người khác đã được ghi nguồn đầy đủ.
 
 Võ Bá Huy, ngày 29 tháng 09 năm 2026
-
-```
-
----
