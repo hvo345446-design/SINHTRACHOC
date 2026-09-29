@@ -76,7 +76,7 @@ Thực thi kịch bản kiểm tra chất lượng mã nguồn:
 
 21/21 phép kiểm thử đạt.'
 
-### 4.3 Chạy kịch bản chính (th01_main.py)
+### 4.2 Chạy kịch bản chính (th01_main.py)
 
 Thực thi kịch bản đánh giá với mã sinh viên:
 
@@ -94,56 +94,67 @@ Hệ thống A tại ngưỡng 0.6674: FMR đo được = 0.100%
 
 ## 5. Kết quả định lượng
 
-Dữ liệu kết xuất từ tệp ket-qua/TH01_2305CT2318_bang-ket-qua.csv:
-| Hệ thống | Cặp cùng người | Cặp khác người | EER tự tính (%) | EER nội suy (%) | EER pyeer (%) | Chênh lệch (pp) | Ngưỡng EER | FNMR @ FMR=1% (%) | FNMR @ FMR=0.1% (%) | Phân tách (d′) | AUC | Thời gian tự tính (s) | Thời gian pyeer (s) |
-| A | 1.000 | 10.000 | 2,81 | 2,813 | 2,805 | 0,005 | 0,5144 |	8,9 | 21,2 | 4,238 | 0,9962 | 0,001 | 0,073 |
-| B | 1.000 | 10.000 | 2,72 | 2,738 | 2,715 | 0,005 | 0,481 | 33,6 | 79,3 |	4,273 |	0,9916 | 0,001 | 0,007 |
-| C | 1.000 | 10.000 | 2,61 | 2,6 |	2,595 |	0,015 |	0,7112 | 3,4 | 7 | 4,461 | 0,9958 |	0 |	0,006 |
+### 5.1. Bảng số liệu tổng hợp
+
+Dữ liệu kết xuất từ tệp `ket-qua/TH01_2305CT2318_bang-ket-qua.csv`:
+
+| Hệ thống | Cặp cùng người | Cặp khác người | EER tự tính (%) | EER nội suy (%) | EER pyeer (%) | Chênh lệch (pp) | Ngưỡng EER | FNMR @ FMR=1% (%) | FNMR @ FMR=0.1% (%) | Phân tách ($d'$) | AUC | Thời gian tự tính (s) | Thời gian pyeer (s) |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **A** | 1.000 | 10.000 | 2,81 | 2,813 | 2,805 | 0,005 | 0,5144 | 8,9 | 21,2 | 4,238 | 0,9962 | 0,001 | 0,073 |
+| **B** | 1.000 | 10.000 | 2,72 | 2,738 | 2,715 | 0,005 | 0,4810 | 33,6 | 79,3 | 4,273 | 0,9916 | 0,001 | 0,007 |
+| **C** | 1.000 | 10.000 | 2,61 | 2,600 | 2,595 | 0,015 | 0,7112 | 3,4 | 7,0 | 4,461 | 0,9958 | 0,000 | 0,006 |
+
+### 5.2. Biểu đồ trực quan hóa
+
+![Hình 1: Phân bố điểm số Genuine và Impostor của ba hệ thống](ket-qua/TH01_2305CT2318_phan-bo-diem.png)
+
+![Hình 2: Đường cong đánh đổi sai số DET của ba hệ thống](ket-qua/TH01_2305CT2318_det.png)
+
+![Hình 3: Đường cong đặc trưng hoạt động máy thu ROC](ket-qua/TH01_2305CT2318_roc.png)
 
 ## 6. Phân tích và thảo luận
 
-<!-- Trả lời từng câu hỏi phân tích của đề, đánh số theo đề. Mỗi nhận định: hiện tượng, cơ chế
-(dẫn tới hàm hoặc tham số), bằng chứng (dẫn tới bảng hoặc hình ở mục 5), giới hạn của kết luận. -->
+### 6.1. Về độ chính xác và tính hội tụ của thuật toán
+Thuật toán tự cài đặt cho kết quả trùng khớp gần như tuyệt đối với thư viện chuẩn `pyeer`. Độ lệch điểm phần trăm EER của cả 3 hệ thống chỉ đạt 0,005 pp (hệ thống A, B) và 0,015 pp (hệ thống C), nhỏ hơn rất nhiều so với ngưỡng khắt khe 0,5 pp. Nhờ sử dụng thuật toán tìm kiếm nhị phân (`np.searchsorted`) trên mảng điểm đã sắp xếp, thời gian tính toán tự cài đặt chỉ mất 0,000 – 0,001 giây, nhanh hơn đáng kể so với việc tính toán qua các vòng lặp thông thường của `pyeer` (0,006 – 0,073 giây).
 
-{phân tích}
-### 6.1. Về độ chính xác và tính hội tụ của thuật toán:
-Thuật toán tự cài đặt cho kết quả trùng khớp gần như tuyệt đối với thư viện chuẩn pyeer. Độ lệch điểm phần trăm EER của cả 3 hệ thống chỉ đạt 0,005 pp (hệ thống A, B) và 0,015 pp (hệ thống C), nhỏ hơn rất nhiều so với ngưỡng khắt khe 0,5 pp.
-Nhờ sử dụng thuật toán tìm kiếm nhị phân (np.searchsorted) trên mảng điểm đã sắp xếp, thời gian tính toán tự cài đặt chỉ mất 0,000 – 0,001 giây, nhanh hơn đáng kể so với việc tính toán qua các vòng lặp thông thường của pyeer (0,006 – 0,073 giây).
+### 6.2. So sánh bản chất phân bố điểm số giữa các hệ thống (Hình 1)
+- Hệ thống A và B hoạt động dựa trên điểm tương đồng (Similarity Score): phân bố Genuine nằm bên phải (điểm cao hơn) và Impostor nằm bên trái (điểm thấp hơn).
+- Hệ thống C hoạt động dựa trên thước đo khoảng cách (Distance Metric): phân bố Genuine nằm bên trái (khoảng cách nhỏ hơn, tập trung quanh giá trị 0,3) và Impostor nằm bên phải (khoảng cách lớn hơn, tập trung quanh giá trị 1,05). Vùng giao thoa (overlap) giữa hai phân bố của Hệ thống C là hẹp nhất, giải thích trực quan cho việc Hệ thống C đạt chỉ số phân tách d' cao nhất trong cả ba hệ thống ($d' = 4,461$).
 
-### 6.2. So sánh bản chất phân bố điểm số giữa các hệ thống (Hình 1):
-Hệ thống A và B hoạt động dựa trên điểm tương đồng (Similarity Score): phân bố Genuine nằm bên phải (điểm cao hơn) và Impostor nằm bên trái (điểm thấp hơn).Hệ thống C hoạt động dựa trên thước đo khoảng cách (Distance Metric): phân bố Genuine nằm bên trái (khoảng cách nhỏ hơn, tập trung quanh giá trị 0,3) và Impostor nằm bên phải (khoảng cách lớn hơn, tập trung quanh giá trị 1,05). Vùng giao thoa (overlap) giữa hai phân bố của Hệ thống C hẹp nhất, dẫn đến chỉ số phân tách d' cao nhất trong cả ba hệ thống (d' = 4,461$).
-
+### 6.3. Phân tích hành vi trên đường cong DET và ROC (Hình 2 và Hình 3)
+- Mặc dù Hệ thống B có chỉ số EER khá tốt (2,72%, thấp hơn Hệ thống A là 2,81%), nhưng đường cong DET của Hệ thống B lại dốc đứng ở vùng FMR thấp. Khi thắt chặt an ninh từ mốc EER về FMR = 0,1%, FNMR của Hệ thống B tăng vọt lên tới 79,3% (trong khi Hệ thống A là 21,2% và Hệ thống C chỉ là 7,0%).
+- Hiện tượng này chứng minh rằng chỉ số EER đơn lẻ không phản ánh đầy đủ hiệu năng của một hệ thống sinh trắc học khi triển khai ở các ngưỡng vận hành thực tế. Hệ thống C duy trì đường cong DET thấp nhất và ổn định nhất trên toàn bộ dải ngưỡng, khẳng định ưu thế vượt trội khi áp dụng vào thực tế.
 
 ## 7. Ý nghĩa đối với bảo mật
+
 Trong thực tế triển khai bảo mật sinh trắc học, việc lựa chọn ngưỡng hoạt động phụ thuộc chặt chẽ vào mục tiêu an ninh:
 
-Cấu hình đề xuất: Trong ba hệ thống, Hệ thống C là lựa chọn an toàn và tối ưu nhất để đưa vào môi trường sản xuất. Hệ thống này cho phép siết chặt tỷ lệ nhận nhầm kẻ tấn công xuống mức rất thấp (FMR = 0,1%) trong khi tỷ lệ người dùng hợp lệ bị từ chối oan chỉ ở mức 7,0%, đảm bảo hài hòa giữa độ an toàn và trải nghiệm người dùng.
+- **Cấu hình đề xuất:** Trong ba hệ thống, **Hệ thống C** là lựa chọn an toàn và tối ưu nhất để đưa vào môi trường sản xuất. Hệ thống này cho phép siết chặt tỷ lệ nhận nhầm kẻ tấn công xuống mức rất thấp (FMR = 0,1%) trong khi tỷ lệ người dùng hợp lệ bị từ chối oan chỉ ở mức 7,0%, đảm bảo hài hòa giữa độ an toàn và trải nghiệm người dùng.
+- **Rủi ro của Hệ thống B:** Tuyệt đối không sử dụng Hệ thống B cho các hệ thống an ninh nghiêm ngặt (như ngân hàng số, cửa khẩu, kiểm soát phòng máy chủ). Nếu cấu hình ngưỡng tại FMR = 0,1% để ngăn chặn kẻ tấn công, sẽ có tới gần 80% người dùng hợp lệ bị từ chối đăng nhập (FNMR = 79,3%), làm tê liệt trải nghiệm và hoạt động nghiệp vụ.
+- **Tác động của FPIR trong bài toán nhận dạng 1:N:** Khi mở rộng từ bài toán xác thực 1:1 sang nhận dạng 1:N ở quy mô lớn (ví dụ cơ sở dữ liệu quốc gia N = 1.000.000 danh tính), dù FMR đo được ở mức rất thấp (0,1%), xác suất xảy ra ít nhất một lần nhận nhầm (FPIR) vẫn chạm mức xấp xỉ 100% với kỳ vọng 1.000 kết quả báo động giả cho mỗi lượt quét. Do đó, trong hệ thống nhận dạng quy mô lớn, bắt buộc phải kết hợp nhận dạng đa sinh trắc học hoặc sử dụng các bộ lọc phân tầng (pre-filtering / indexing) trước khi đối sánh chi tiết.
 
-Rủi ro của Hệ thống B: Tuyệt đối không sử dụng Hệ thống B cho các hệ thống an ninh nghiêm ngặt (như ngân hàng, cửa khẩu, phòng máy chủ). Nếu cấu hình ngưỡng tại FMR = 0,1% để ngăn chặn kẻ tấn công, sẽ có tới gần 80% người dùng hợp lệ bị từ chối đăng nhập (FNMR = 79,3%), làm tê liệt hoạt động của người dùng.
-
-Tác động của FPIR trong bài toán nhận dạng 1:N: Khi mở rộng từ bài toán xác thực 1:1 sang nhận dạng 1:N ở quy mô lớn (ví dụ cơ sở dữ liệu quốc gia N = 1.000.000 danh tính), dù FMR ở mức rất thấp (0,1%), xác suất xảy ra ít nhất một lần nhận nhầm (FPIR) vẫn chạm mức xấp xỉ 100% với kỳ vọng 1.000 kết quả báo động giả cho mỗi lượt quét. Do đó, trong hệ thống nhận dạng quy mô lớn, bắt buộc phải kết hợp nhận dạng đa sinh trắc học hoặc sử dụng các bộ lọc phân tầng (pre-filtering) trước khi đối sánh chi tiết.
 ## 8. Sự cố gặp phải và cách xử lý
 
 | Sự cố (thông báo lỗi) | Nguyên nhân | Cách xử lý |
 |---|---|---|
-| ModuleNotFoundError: No module named 'pkg_resources' | Gói setuptools phiên bản mới (v84.x) đã gỡ bỏ hoàn toàn module pkg_resources mà thư viện cũ pyeer phụ thuộc vào. | Hạ cấp phiên bản setuptools về bản tương thích bằng lệnh: pip install "setuptools<70" |
-| TypeError: fnmr_at_fmr() got an unexpected keyword argument 'higher_is_better' | Kịch bản th01_main.py gọi hàm fnmr_at_fmr với điểm số thô (gen, imp, target_fmr, higher_is_better=...), trong khi hàm ban đầu chỉ nhận mảng tỷ lệ lỗi (fmr, fnmr, ...). | Nâng cấp hàm fnmr_at_fmr(*args, **kwargs) linh hoạt: tự động nhận diện nếu tham số là mảng điểm thô thì tính toán FMR/FNMR thông qua error_rates trước khi tra cứu. |
-| AttributeError: module 'bio_metrics' has no attribute 'plot_distributions' | File bio_metrics.py trong quá trình sửa lỗi thuật toán đã bị ghi đè thiếu các hàm trực quan hóa đồ thị. | Bổ sung đầy đủ ba hàm vẽ biểu đồ plot_distributions, plot_det, plot_roc sử dụng matplotlib. |
-| AttributeError: 'str' object has no attribute 'get' trong plot_distributions | Dữ liệu dists truyền từ th01_main.py là một từ điển (dict). Vòng lặp for item in dists: lặp qua khóa chuỗi chứ không phải từ điển con. | Viết hàm chuẩn hóa dữ liệu _extract_distributions và _extract_curves hỗ trợ bóc tách linh hoạt cả dạng dict, list, và tuple. |
-| TypeError: plot_det() got an unexpected keyword argument 'title' | Hàm vẽ đồ thị chỉ khai báo tham số vị trí cố định, không nhận tham số từ khóa title. | Bổ sung tham số mặc định title="..." và **kwargs vào định nghĩa các hàm vẽ. |
-| Biểu đồ DET trắng xóa và Biểu đồ ROC thiếu đường cong của ba hệ thống | Hàm bóc tách dữ liệu gán nhầm tuple (fmr, fnmr) thành khóa {"gen", "imp"} dẫn đến fmr và fnmr rỗng. | Sửa hàm _extract_curves trích xuất đúng vị trí phần tử trong tuple (fmr, fnmr) hoặc (thresholds, fmr, fnmr). |
+| `ModuleNotFoundError: No module named 'pkg_resources'` | Gói `setuptools` phiên bản mới (v84.x) đã gỡ bỏ hoàn toàn module `pkg_resources` mà thư viện cũ `pyeer` phụ thuộc vào. | Hạ cấp phiên bản `setuptools` về bản tương thích bằng lệnh: `pip install "setuptools<70"`. |
+| `TypeError: fnmr_at_fmr() got an unexpected keyword argument 'higher_is_better'` | Kịch bản `th01_main.py` gọi hàm `fnmr_at_fmr` với điểm số thô `(gen, imp, target_fmr, higher_is_better=...)`, trong khi hàm ban đầu chỉ nhận mảng tỷ lệ lỗi `(fmr, fnmr, ...)`. | Nâng cấp hàm `fnmr_at_fmr(*args, **kwargs)` linh hoạt: tự động nhận diện nếu tham số là mảng điểm thô thì tính toán FMR/FNMR thông qua `error_rates` trước khi tra cứu. |
+| `AttributeError: module 'bio_metrics' has no attribute 'plot_distributions'` | File `bio_metrics.py` trong quá trình sửa lỗi thuật toán đã bị ghi đè thiếu các hàm trực quan hóa đồ thị. | Bổ sung đầy đủ ba hàm vẽ biểu đồ `plot_distributions`, `plot_det`, `plot_roc` sử dụng `matplotlib`. |
+| `AttributeError: 'str' object has no attribute 'get'` trong `plot_distributions` | Dữ liệu `dists` truyền từ `th01_main.py` là một từ điển (`dict`). Vòng lặp `for item in dists:` lặp qua khóa chuỗi chứ không phải từ điển con. | Viết hàm chuẩn hóa dữ liệu `_extract_distributions` và `_extract_curves` hỗ trợ bóc tách linh hoạt cả dạng `dict`, `list`, và `tuple`. |
+| `TypeError: plot_det() got an unexpected keyword argument 'title'` | Hàm vẽ đồ thị chỉ khai báo tham số vị trí cố định, không nhận tham số từ khóa `title`. | Bổ sung tham số mặc định `title="..."` và `**kwargs` vào định nghĩa các hàm vẽ. |
+| Biểu đồ DET trắng xóa và Biểu đồ ROC thiếu đường cong của ba hệ thống | Hàm bóc tách dữ liệu gán nhầm tuple `(fmr, fnmr)` thành khóa `{"gen", "imp"}` dẫn đến `fmr` và `fnmr` rỗng. | Sửa hàm `_extract_curves` trích xuất đúng vị trí phần tử trong tuple `(fmr, fnmr)` hoặc `(thresholds, fmr, fnmr)`. |
 
 ## 9. Dữ liệu sinh trắc, nguồn tham khảo và công cụ AI
 
-- [X] Kho không chứa ảnh vân tay, khuôn mặt, mống mắt, giọng nói của người thật, tập dữ liệu, tệp `.db`, `.pkl`, `.npy`, trọng số mô hình.
-- [X] Mã dùng lại của người khác đã ghi nguồn ngay trong chú thích mã.
+- [x] Kho không chứa ảnh vân tay, khuôn mặt, mống mắt, giọng nói của người thật, tập dữ liệu, tệp `.db`, `.pkl`, `.npy`, trọng số mô hình.
+- [x] Mã dùng lại của người khác đã ghi nguồn ngay trong chú thích mã.
 
 Nguồn tham khảo:
-Tiêu chuẩn ISO/IEC 19795-1: Biometric performance testing and reporting.
-Thư viện tham chiếu mã nguồn mở pyeer (Python Electronic Error Rate): https://github.com/mrquincymorris/pyeer, truy cập ngày 28/09/2026.
-Tài liệu hướng dẫn thực hành Lab 02 - Học phần Bảo mật sinh trắc, Trường Đại học Hùng Vương TP. Hồ Chí Minh.
+- Tiêu chuẩn ISO/IEC 19795-1: Biometric performance testing and reporting.
+- Thư viện tham chiếu mã nguồn mở `pyeer` (Python Electronic Error Rate): https://github.com/mrquincymorris/pyeer, truy cập ngày 28/09/2026.
+- Tài liệu hướng dẫn thực hành Lab 02 - Học phần Bảo mật sinh trắc, Trường Đại học Hùng Vương TP. Hồ Chí Minh.
 
-Công cụ AI: Sử dụng Gemini làm trợ lý kỹ thuật hỗ trợ dò lỗi cú pháp, gỡ lỗi kiểu dữ liệu đồ thị matplotlib, và tối ưu thuật toán tìm kiếm nhị phân trong bio_metrics.py.
+Công cụ AI: Sử dụng Gemini làm trợ lý kỹ thuật hỗ trợ dò lỗi cú pháp, gỡ lỗi kiểu dữ liệu đồ thị `matplotlib`, và tối ưu thuật toán tìm kiếm nhị phân trong `bio_metrics.py`.
 
 ## 10. Cam kết
 
