@@ -199,16 +199,3 @@ Võ Bá Huy, ngày 29 tháng 09 năm 2026
 ```
 
 ---
-
-### Các bước xác nhận cuối cùng
-1. Mở tệp `lab02/bao-cao.md`, chọn toàn bộ (`Ctrl + A`) và dán đè nội dung trên vào, sau đó nhấn **Ctrl + S** để lưu.
-2. Đảm bảo tệp `lab02/bio_metrics.py` đã dùng lazy import cho `matplotlib` (chỉ import bên trong các hàm vẽ `plot_...`).
-3. Chạy lệnh commit và push lên GitHub[cite: 10]:
-   ```powershell
-   git add bio_metrics.py bao-cao.md
-   git commit -m "Bo sung anh vao muc 5.2 va hoan thien bao cao"
-   git push origin main
-
-```
-
-4. Kiểm tra tab **Actions** trên GitHub để xác nhận tất cả các bước kiểm tra hiển thị dấu tích xanh.
