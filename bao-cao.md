@@ -111,6 +111,11 @@ Dữ liệu kết xuất từ tệp ket-qua/TH01_2305CT2318_bang-ket-qua.csv:
 
 ### 5.2. Biểu đồ trực quan hóa
 
+![Hình 1: Phân bố điểm số Genuine và Impostor của ba hệ thống](ket-qua/TH01_2305CT2318_phan-bo-diem.png)
+
+![Hình 2: Đường cong đánh đổi sai số DET của ba hệ thống](ket-qua/TH01_2305CT2318_det.png)
+
+![Hình 3: Đường cong đặc trưng hoạt động máy thu ROC](ket-qua/TH01_2305CT2318_roc.png)
 ## 6. Phân tích và thảo luận
 
 ### 6.1. Câu hỏi 1: Lựa chọn giữa Hệ thống A và B khi ngân hàng yêu cầu FMR <= 0,1%
@@ -140,8 +145,6 @@ N_min >= 3 / 0,01% = 3 / 0,0001 = 30.000 cặp.
 * Theo Quy tắc 30 lỗi của Doddington (khuyến nghị trong tiêu chuẩn ISO/IEC 19795 để ước lượng FMR với độ lệch tương đối +-30% ở độ tin cậy 90%):
 N >= 30 / FMR = 30 / 0,0001 = 300.000 cặp.
 
-
-
 ### 6.5. Câu hỏi 5: Tính toán kỳ vọng sai số trong thực tế
 
 * Lớp 50 sinh viên khi so từng cặp:
@@ -149,13 +152,9 @@ N >= 30 / FMR = 30 / 0,0001 = 300.000 cặp.
 C(50, 2) = (50 * 49) / 2 = 1.225 cặp.
 * Kỳ vọng số cặp so khớp sai khi FMR = 1%:
 E = 1.225 * 1% = 1.225 * 0,01 = 12,25 cặp.
-
-
 * Tìm kiếm 1:N trên 100 triệu bản ghi (N = 10^8) với FMR = 0,01%:
 * Kỳ vọng số kết quả sai cho mỗi lần tìm:
 E = N * FMR = 100.000.000 * 0,0001 = 10.000 kết quả sai cho mỗi lần tìm.
-
-
 
 ## 7. Ý nghĩa đối với bảo mật
 
@@ -196,3 +195,20 @@ Công cụ AI: Sử dụng Gemini làm trợ lý kỹ thuật hỗ trợ dò l�
 Tôi cam kết các kết quả trong báo cáo này do chính tôi chạy trên máy của mình, các phần sử dụng lại của người khác đã được ghi nguồn đầy đủ.
 
 Võ Bá Huy, ngày 29 tháng 09 năm 2026
+
+```
+
+---
+
+### Các bước xác nhận cuối cùng
+1. Mở tệp `lab02/bao-cao.md`, chọn toàn bộ (`Ctrl + A`) và dán đè nội dung trên vào, sau đó nhấn **Ctrl + S** để lưu.
+2. Đảm bảo tệp `lab02/bio_metrics.py` đã dùng lazy import cho `matplotlib` (chỉ import bên trong các hàm vẽ `plot_...`).
+3. Chạy lệnh commit và push lên GitHub[cite: 10]:
+   ```powershell
+   git add bio_metrics.py bao-cao.md
+   git commit -m "Bo sung anh vao muc 5.2 va hoan thien bao cao"
+   git push origin main
+
+```
+
+4. Kiểm tra tab **Actions** trên GitHub để xác nhận tất cả các bước kiểm tra hiển thị dấu tích xanh.
