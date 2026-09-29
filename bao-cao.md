@@ -74,7 +74,7 @@ Thực thi kịch bản kiểm tra chất lượng mã nguồn:
 ĐẠT    probit(0,5) và probit(0,975): nhận [0. 1.95996398], mong đợi [0.0, 1.959963985]
 ĐẠT    probit(0) được kẹp, hữu hạn: nhận -4.264890793922825, mong đợi -4.264890794
 
-21/21 phép kiểm thử đạt.
+21/21 phép kiểm thử đạt.'
 
 ### 4.3 Chạy kịch bản chính (th01_main.py)
 
